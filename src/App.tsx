@@ -61,6 +61,7 @@ const Navigation = () => {
 
   const navLinks = [
     { label: 'Projects', href: '#products' },
+    { label: 'Case study', href: '#case-study' },
     { label: 'Blueprints', href: '#insights' },
     { label: 'Roadmap', href: '#services' },
     { label: 'About', href: '#about' },
@@ -261,22 +262,33 @@ const Insights = () => {
 const Products = () => {
   const projectCards = [
     {
+      name: 'Xylo',
+      label: 'Live on App Store',
+      summary: 'On-device document intelligence: scan, summarize, and chat with any document using a hybrid RAG pipeline with multi-backend model selection (Apple FoundationModels → Gemma → Qwen3).',
+      chips: ['iOS', 'RAG', 'On-device LLM', 'Swift'],
+      links: [
+        { label: 'App Store', href: 'https://apps.apple.com/us/app/xylo-ai/id6771778565' },
+        { label: 'Live site', href: 'https://xylo.makata.ai' },
+        { label: 'Source', href: 'https://github.com/ralph-mattew/xylo' },
+      ],
+    },
+    {
       name: 'Unawain',
-      label: 'Beta live',
-      summary: 'Offline document summarizer for confidential content and local contract review.',
+      label: 'Live on App Store',
+      summary: 'Offline document summarizer built for Filipino users, with local translation and dialect-aware summarization for confidential documents.',
       chips: ['iOS', 'PDF', 'Privacy', 'Local LLM'],
+      links: [
+        { label: 'App Store', href: 'https://apps.apple.com/us/app/unawain/id6763873149' },
+        { label: 'Live site', href: 'https://unawain.makata.ai' },
+        { label: 'Source', href: 'https://github.com/ralph-mattew/unawain' },
+      ],
     },
     {
       name: 'ItanongMo',
-      label: 'In development',
+      label: 'Concept',
       summary: 'Multimodal voice + image assistant designed for multilingual Filipino communication.',
       chips: ['Voice', 'Vision', 'Tagalog', 'Edge AI'],
-    },
-    {
-      name: 'Makata Edge Stack',
-      label: 'Platform',
-      summary: 'The foundation framework for building secure, device-first AI experiences across products.',
-      chips: ['RAG', 'Models', 'Eval', 'Deployment'],
+      links: [],
     },
   ];
 
@@ -285,7 +297,7 @@ const Products = () => {
       <div className="max-w-7xl mx-auto px-6 space-y-16">
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <h2 className="text-3xl sm:text-4xl font-bold">Selected projects</h2>
-          <p className="text-slate-400 text-lg">A snapshot of my demos, prototypes, and system builds focused on local intelligence and production-ready edge AI.</p>
+          <p className="text-slate-400 text-lg">A snapshot of my demos, shipped apps, and system builds focused on local intelligence and production-ready edge AI.</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -301,8 +313,78 @@ const Products = () => {
                   <span key={chip} className="rounded-full border border-slate-600 bg-slate-700/60 px-2.5 py-1 text-xs text-slate-200">{chip}</span>
                 ))}
               </div>
+              {project.links.length > 0 && (
+                <div className="flex flex-wrap gap-4 pt-2 border-t border-slate-700 mt-auto">
+                  {project.links.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-sm font-semibold text-emerald-400 hover:text-emerald-300 pt-4 flex items-center gap-1"
+                    >
+                      {link.label}
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const CaseStudy = () => {
+  const highlights = [
+    {
+      title: 'Hybrid Summary + RAG pipeline',
+      body: 'Documents are summarized once at ingestion, then chunked and embedded locally so follow-up questions are answered with grounded, cited context — not just retrieved fragments.',
+    },
+    {
+      title: 'Multi-backend model selection',
+      body: 'Xylo selects the best available backend per device: Apple FoundationModels on 8GB+ devices with Apple Intelligence, Gemma 4 Edge as the primary on-device LLM, and Qwen3 0.6B as a lightweight fallback on 6GB devices.',
+    },
+    {
+      title: 'Zero-server architecture',
+      body: 'OCR, embeddings (NLEmbedding), retrieval, and generation all run on-device via llama.cpp (Metal GPU) and Apple frameworks. No document ever leaves the phone.',
+    },
+  ];
+
+  return (
+    <section id="case-study" className="bg-white py-24 border-b border-slate-200">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-3xl mb-12 space-y-4">
+          <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-100 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-emerald-700">
+            Case study
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">Xylo: on-device document intelligence, shipped</h2>
+          <p className="text-slate-600 text-lg leading-relaxed">
+            Xylo is a privacy-first iOS app that scans, summarizes, and lets you chat with any document — entirely on-device. It&apos;s live on the App Store and built on a RAG architecture designed from the ground up for mobile memory and thermal constraints.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-8 mb-12">
+          {highlights.map((item, idx) => (
+            <div key={idx} className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+              <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap gap-4">
+          <Button variant="dark" href="https://xylo.makata.ai" className="text-sm">
+            Visit xylo.makata.ai
+          </Button>
+          <Button variant="secondary" href="https://apps.apple.com/us/app/xylo-ai/id6771778565" className="text-sm">
+            View on the App Store
+          </Button>
+          <Button variant="secondary" href="https://github.com/ralph-mattew/xylo" className="text-sm">
+            Read the architecture docs
+          </Button>
         </div>
       </div>
     </section>
@@ -406,6 +488,7 @@ export default function App() {
         <Benefits />
         <Insights />
         <Products />
+        <CaseStudy />
         <Services />
         <About />
         <CallToAction />
