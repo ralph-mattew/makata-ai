@@ -383,7 +383,7 @@ const Connect = () => (
           Research collaboration, reproducing or challenging a result, or comparing measurements from your own devices — all welcome.
         </p>
         <div className="pt-8 flex flex-wrap justify-center gap-4">
-          <Button variant="primary" href="mailto:ralph@makata.ai" className="px-8 py-4 text-lg">
+          <Button variant="primary" href="mailto:edgelab@makata.ai" className="px-8 py-4 text-lg">
             Email the lab
           </Button>
           <Button variant="secondary" href={GITHUB_URL} className="px-8 py-4 text-lg">

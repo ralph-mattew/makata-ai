@@ -116,7 +116,7 @@ export const Navigation = () => {
               {link.label}
             </Link>
           ))}
-          <Button variant={onDark ? 'secondary' : 'dark'} href="mailto:ralph@makata.ai" className="!py-2.5 !px-5 text-sm">
+          <Button variant={onDark ? 'secondary' : 'dark'} href="mailto:edgelab@makata.ai" className="!py-2.5 !px-5 text-sm">
             Connect
           </Button>
         </nav>
@@ -145,7 +145,7 @@ export const Navigation = () => {
               {link.label}
             </Link>
           ))}
-          <Button variant="dark" href="mailto:ralph@makata.ai" className="w-full">
+          <Button variant="dark" href="mailto:edgelab@makata.ai" className="w-full">
             Connect
           </Button>
         </div>
@@ -176,8 +176,8 @@ export const Footer = () => (
         <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" className="hover:text-emerald-600 transition">
           LinkedIn
         </a>
-        <a href="mailto:ralph@makata.ai" className="hover:text-emerald-600 transition">
-          ralph@makata.ai
+        <a href="mailto:edgelab@makata.ai" className="hover:text-emerald-600 transition">
+          edgelab@makata.ai
         </a>
       </nav>
     </div>

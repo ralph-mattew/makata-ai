@@ -190,7 +190,7 @@ export const ProjectConnect = ({ name, links }: { name: string; links: ProjectLi
           If you&apos;re working under similar constraints — or want to reproduce, challenge, or extend anything on this page — get in touch.
         </p>
         <div className="flex flex-wrap justify-center gap-4 pt-2">
-          <Button variant="primary" href="mailto:ralph@makata.ai" className="px-8 py-4 text-lg">
+          <Button variant="primary" href="mailto:edgelab@makata.ai" className="px-8 py-4 text-lg">
             Email the lab
           </Button>
           {links.map((link) => (
