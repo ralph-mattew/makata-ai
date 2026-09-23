@@ -4,6 +4,7 @@ import { GlobalStyles, Navigation, Footer, ScrollManager } from './components/La
 import Home from './pages/Home';
 import XyloCaseStudy from './pages/XyloCaseStudy';
 import UnawainCaseStudy from './pages/UnawainCaseStudy';
+import NotFound from './pages/NotFound';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/work/xylo" element={<XyloCaseStudy />} />
           <Route path="/work/unawain" element={<UnawainCaseStudy />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />

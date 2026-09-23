@@ -1,35 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+// Font import only — background/text base colors, scroll-behavior, and the
+// bg-woven-pattern/shadow-soft/shadow-card utilities all now come from
+// tailwind.config.js theme tokens (see src/styles.css for the base rules).
 export const GlobalStyles = () => (
   <style dangerouslySetInnerHTML={{ __html: `
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f8fafc;
-      color: #0f172a;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    .bg-woven-pattern {
-      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%2310b981' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
-    }
-
-    .shadow-soft { box-shadow: 0 4px 40px -2px rgba(0, 0, 0, 0.04); }
-    .shadow-card { box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05); }
-
-    html { scroll-behavior: smooth; }
   ` }} />
 );
 
+export const GITHUB_URL = 'https://github.com/ralph-mattew';
+export const LINKEDIN_URL = 'https://www.linkedin.com/in/ralphmattewpalomaria/';
+
+// Mark: a single-stroke "M" read as a signal path that terminates in a node —
+// the model reaching the device. Mirrors public/favicon.svg.
+export const LogoMark = ({ className = 'w-9 h-9' }: { className?: string }) => (
+  <svg viewBox="0 0 32 32" className={`${className} shrink-0 shadow-sm rounded-lg`} aria-hidden="true">
+    <rect width="32" height="32" rx="7" fill="#022c22" />
+    <path d="M8 23V9.5l8 8 8-8V23" fill="none" stroke="#ffffff" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round" />
+    <circle cx="24" cy="23" r="2.9" fill="#34d399" />
+  </svg>
+);
+
 export const Logo = ({ isDark = false }: { isDark?: boolean }) => (
-  <div className="flex items-center space-x-3 cursor-pointer">
-    <div className="w-9 h-9 rounded-lg bg-emerald-900 flex items-center justify-center text-white font-bold tracking-tighter shadow-sm">M</div>
-    <span className={`text-xl font-bold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
-      MAKATA<span className="text-emerald-600">.ai</span>
-    </span>
+  <div className="flex items-center gap-3 cursor-pointer">
+    <LogoMark />
+    <div className="leading-none">
+      <span className={`block text-lg font-bold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>Makata</span>
+      <span className={`block mt-1 font-mono text-micro uppercase tracking-eyebrow ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+        AI Edge Lab
+      </span>
+    </div>
   </div>
 );
 
@@ -83,40 +85,49 @@ export const Button = ({
 };
 
 const navLinks = [
-  { label: 'Projects', href: '/#products' },
-  { label: 'Xylo case study', href: '/work/xylo' },
-  { label: 'Unawain case study', href: '/work/unawain' },
-  { label: 'Roadmap', href: '/#services' },
+  { label: 'Work', href: '/#work' },
+  { label: 'Research', href: '/#research' },
   { label: 'About', href: '/#about' },
 ];
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Project pages open on a dark hero; the transparent header needs light text there.
+  const onDark = !isScrolled && pathname.startsWith('/work/');
+
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <Link to="/"><Logo /></Link>
+        <Link to="/"><Logo isDark={onDark} /></Link>
 
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600">
+        <nav className={`hidden md:flex items-center space-x-8 text-sm font-medium ${onDark ? 'text-slate-300' : 'text-slate-600'}`}>
           {navLinks.map((link, idx) => (
-            <Link key={idx} to={link.href} className="hover:text-emerald-600 transition">
+            <Link key={idx} to={link.href} className={`${onDark ? 'hover:text-white' : 'hover:text-emerald-600'} transition`}>
               {link.label}
             </Link>
           ))}
-          <Button variant="dark" href="mailto:ralph@makata.ai" className="!py-2.5 !px-5 text-sm">
-            Work with me
+          <Button variant={onDark ? 'secondary' : 'dark'} href="mailto:ralph@makata.ai" className="!py-2.5 !px-5 text-sm">
+            Connect
           </Button>
         </nav>
 
-        <button className="md:hidden p-2 text-slate-600" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+        <button
+          className={`md:hidden p-2 ${onDark ? 'text-slate-200' : 'text-slate-600'}`}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-menu"
+        >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {mobileMenuOpen ? (
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -128,14 +139,14 @@ export const Navigation = () => {
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-20 left-0 w-full bg-white border-b border-slate-200 px-6 py-4 flex flex-col space-y-4 shadow-lg">
+        <div id="mobile-menu" className="md:hidden absolute top-20 left-0 w-full bg-white border-b border-slate-200 px-6 py-4 flex flex-col space-y-4 shadow-lg">
           {navLinks.map((link, idx) => (
             <Link key={idx} to={link.href} onClick={() => setMobileMenuOpen(false)} className="text-slate-600 font-medium hover:text-emerald-600">
               {link.label}
             </Link>
           ))}
           <Button variant="dark" href="mailto:ralph@makata.ai" className="w-full">
-            Work with me
+            Connect
           </Button>
         </div>
       )}
@@ -144,11 +155,36 @@ export const Navigation = () => {
 };
 
 export const Footer = () => (
-  <footer className="border-t border-slate-200 py-12 bg-white">
-    <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-      <Link to="/"><Logo isDark={false} /></Link>
-      <p className="text-slate-500 text-sm text-center md:text-left">
-        © 2026 MAKATA.ai • Built for private, local, and intelligent experiences.
+  <footer className="border-t border-slate-200 py-16 bg-white">
+    <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-start justify-between gap-12">
+      <div className="space-y-4 max-w-sm">
+        <Link to="/"><Logo isDark={false} /></Link>
+        <p className="text-slate-500 text-sm leading-relaxed">
+          Research and engineering for useful AI on constrained devices. Methods, code, and benchmarks are published as they&apos;re validated.
+        </p>
+      </div>
+
+      <nav aria-label="Footer" className="flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-slate-600">
+        {navLinks.map((link, idx) => (
+          <Link key={idx} to={link.href} className="hover:text-emerald-600 transition">
+            {link.label}
+          </Link>
+        ))}
+        <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="hover:text-emerald-600 transition">
+          GitHub
+        </a>
+        <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" className="hover:text-emerald-600 transition">
+          LinkedIn
+        </a>
+        <a href="mailto:ralph@makata.ai" className="hover:text-emerald-600 transition">
+          ralph@makata.ai
+        </a>
+      </nav>
+    </div>
+
+    <div className="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-slate-100">
+      <p className="text-slate-500 text-sm">
+        © 2026 Makata AI Edge Lab · makata.ai
       </p>
     </div>
   </footer>
@@ -156,7 +192,7 @@ export const Footer = () => (
 
 /**
  * Handles scroll restoration for the SPA: jumps to an in-page anchor when the
- * URL contains a hash (e.g. /#products, or navigating from another route to
+ * URL contains a hash (e.g. /#work, or navigating from another route to
  * /work/xylo#top), and resets scroll position to the top on plain route changes.
  */
 export const ScrollManager = () => {
