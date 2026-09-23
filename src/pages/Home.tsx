@@ -66,7 +66,7 @@ const Hero = () => {
           </h1>
 
           <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-            An independent lab researching how to make AI useful on the devices people already carry. I build working systems on real phones, measure where memory, latency, and heat push back, and publish the methods, models, and benchmarks as they&apos;re validated.
+            An independent lab researching how to make AI useful on the devices people already carry. The lab builds working systems on real phones, measures where memory, latency, and heat push back, and publishes the methods, models, and benchmarks as they&apos;re validated.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
@@ -337,8 +337,16 @@ const About = () => (
   <section id="about" className="bg-slate-50 py-24 border-t border-b border-slate-200">
     <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
       <div className="w-full md:w-1/3">
-        <div className="rounded-2xl shadow-lg border border-slate-200 bg-slate-900 aspect-square w-full flex items-center justify-center">
-          <span className="text-6xl font-extrabold text-emerald-500 tracking-tighter">RM</span>
+        <div className="rounded-2xl shadow-lg border border-slate-200 bg-white aspect-square w-full overflow-hidden">
+          <img
+            src="/ralph-headshot.jpeg"
+            alt="Ralph Mattew Palomaria"
+            width={497}
+            height={600}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover object-top"
+          />
         </div>
       </div>
       <div className="w-full md:w-2/3 space-y-6">
@@ -380,6 +388,9 @@ const Connect = () => (
           </Button>
           <Button variant="secondary" href={GITHUB_URL} className="px-8 py-4 text-lg">
             GitHub
+          </Button>
+          <Button variant="secondary" href="https://github.com/ralph-mattew/makata-edge-lab/blob/main/CONTRIBUTING.md" className="px-8 py-4 text-lg">
+            Replicate a result
           </Button>
         </div>
       </div>
