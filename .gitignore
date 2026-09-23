@@ -3,3 +3,10 @@ dist
 .vite
 .DS_Store
 npm-debug.log*
+
+# Internal planning docs (kept local, not published)
+alignment/
+redesign/
+docs/execution-plan.md
+docs/phase0-claim-inventory.md
+docs/evidence/
